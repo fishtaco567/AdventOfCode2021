@@ -1,4 +1,5 @@
 pub mod day01;
+pub mod day02;
 
 use std::env;
 
@@ -10,6 +11,7 @@ fn main() {
         let num = day.as_str().parse::<i32>().unwrap();
         match num {
             1 => day01::run(),
+            2 => day02::run(),
             _ => println!("Day Not Found: {}", num),
         }
     } else {
