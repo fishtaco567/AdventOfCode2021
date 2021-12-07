@@ -4,6 +4,7 @@ pub mod day03;
 pub mod day04;
 pub mod day05;
 pub mod day06;
+pub mod day07;
 
 use std::env;
 
@@ -20,6 +21,7 @@ fn main() {
             4 => day04::run(),
             5 => day05::run(),
             6 => day06::run(),
+            7 => day07::run(),
             _ => println!("Day Not Found: {}", num),
         }
     } else {
