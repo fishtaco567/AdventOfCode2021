@@ -2,7 +2,6 @@ use std::collections::HashMap;
 use std::collections::BinaryHeap;
 use std::collections::HashSet;
 use std::hash::Hash;
-use std::iter::Scan;
 
 #[derive(PartialEq, Eq, Clone)]
 struct State {
@@ -69,7 +68,7 @@ impl Board {
         id
     }
 
-    fn display(&self) {
+    fn _display(&self) {
         for (id, cell) in self.cells.iter().enumerate() {
             let s:String = match cell {
                 Cell::Room(c,_) => {
@@ -98,7 +97,7 @@ impl Board {
         }
     }
 
-    fn display_amphis(&self, amphis: &State) {
+    fn _display_amphis(&self, amphis: &State) {
         let indicies_zero = vec![0,1,2,7,8,13,14,19,20,25,26];
         let indicies_next1 = vec![-1,-2,3,-2,9,-2,15,-2,21,-2,-1];
         let indicies_next2 = vec![-1,-2,4,-2,10,-2,16,-2,22,-2,-1];
@@ -140,14 +139,16 @@ impl Board {
 }
 
 pub fn run() {
-    //run_part_01();
+    println!("--Part 1");
+    run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 
 fn run_part_01() {
     let (board, amphipods) = setup_part_01();
 
-    board.display();
+    //board.display();
 
     let orig_state = State { amphipods, score: 0 };
 
@@ -164,7 +165,7 @@ fn run_part_01() {
 fn run_part_02() {
     let (board, amphipods) = setup_part_02();
 
-    board.display();
+    //board.display();
 
     let orig_state = State { amphipods, score: 0 };
 
@@ -190,8 +191,8 @@ fn simulate(board: &Board, orig_state: State) -> Option<State> {
     while let Some(next) = queue.pop() {
         if t.elapsed().as_secs() > 2 {
             t = std::time::Instant::now();
-            println!("{}", next.score);
-            board.display_amphis(&next);
+            //println!("{}", next.score);
+            //board.display_amphis(&next);
         }
 
         let mut is_done = true;
@@ -218,8 +219,6 @@ fn simulate(board: &Board, orig_state: State) -> Option<State> {
             queue.push(s);
         }
     }
-
-    println!("No");
     None
 }
 
@@ -295,7 +294,7 @@ fn find_all_valid(amphi: &Amphipod, state: &State, board: &Board, coming_from: &
                     Cell::Room(_,_) => {
                         find_all_valid(&Amphipod { cell: *connected, kind: amphi.kind, id: amphi.id }, state, board, coming_from, occupied, valid, visited, score_add);
                     },
-                    Cell::RoomEnd(c) => {
+                    Cell::RoomEnd(_) => {
                         find_all_valid(&Amphipod { cell: *connected, kind: amphi.kind, id: amphi.id }, state, board, coming_from, occupied, valid, visited, score_add);
                     },
                     Cell::Hall => {
@@ -372,7 +371,7 @@ fn find_all_valid(amphi: &Amphipod, state: &State, board: &Board, coming_from: &
     }
 }
 
-fn setup_test() -> (Board, HashMap<usize, Amphipod>) {
+fn _setup_test() -> (Board, HashMap<usize, Amphipod>) {
     let mut board = Board::new();
     let mut amphipods = HashMap::new();
 
@@ -407,7 +406,7 @@ fn setup_test() -> (Board, HashMap<usize, Amphipod>) {
     amphipods.insert(7, Amphipod { cell: room41, kind: 'A', id: 7 });
 
     let id10 = board.add_cell(Cell::Hall, vec![id9]);
-    let id11 = board.add_cell(Cell::Hall, vec![id10]);
+    let _ = board.add_cell(Cell::Hall, vec![id10]);
 
     (board, amphipods)
 }
@@ -447,7 +446,7 @@ fn setup_part_01() -> (Board, HashMap<usize, Amphipod>) {
     amphipods.insert(7, Amphipod { cell: room41, kind: 'C', id: 7 });
 
     let id10 = board.add_cell(Cell::Hall, vec![id9]);
-    let id11 = board.add_cell(Cell::Hall, vec![id10]);
+    let _ = board.add_cell(Cell::Hall, vec![id10]);
 
     (board, amphipods)
 }
@@ -503,7 +502,7 @@ fn setup_part_02() -> (Board, HashMap<usize, Amphipod>) {
     amphipods.insert(15, Amphipod { cell: room43, kind: 'C', id: 15 });
 
     let id10 = board.add_cell(Cell::Hall, vec![id9]);
-    let id11 = board.add_cell(Cell::Hall, vec![id10]);
+    let _ = board.add_cell(Cell::Hall, vec![id10]);
 
     (board, amphipods)
 }

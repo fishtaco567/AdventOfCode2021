@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 use std::fs::File;
-use std::hash::Hash;
 use std::io::{BufRead, BufReader};
 use std::panic;
 
@@ -98,6 +97,9 @@ impl Volume {
 }
 
 pub fn run() {
+    println!("--Part 1");
+    run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 
@@ -155,12 +157,15 @@ fn run_part_02() {
 }
 
 fn run_instruction(map: &mut HashSet<Point>, ins: Instruction, min: &Point, max: &Point) {
-    for i in ins.min.0..=ins.max.0 {
-        for j in ins.min.1..=ins.max.1 {
-            for k in ins.min.2..=ins.max.2 {
-                if i < min.0 || j < min.1 || k < min.2 || i > max.0 || j > max.1 || k > max.1 {
-                    continue;
-                }
+    let real_min_x = ins.min.0.max(min.0);
+    let real_min_y = ins.min.1.max(min.1);
+    let real_min_z = ins.min.2.max(min.2);
+    let real_max_x = ins.max.0.min(max.0);
+    let real_max_y = ins.max.1.min(max.1);
+    let real_max_z = ins.max.2.min(max.2);
+    for i in real_min_x..=real_max_x {
+        for j in real_min_y..=real_max_y {
+            for k in real_min_z..=real_max_z {
 
                 match ins.action {
                     Action::On => {

@@ -101,7 +101,6 @@ fn run_part_01() {
                     let rotated = rotate(&unplaced_observations[i].points, rotation);
                     match check_pair(&rotated, placed) {
                         Some(p) => {
-                            println!("{},{},{}  {}", p.0, p.1, p.2, i);
                             let r = unplaced_observations.swap_remove(i);
                             let new_obs = PlacedObservation {
                                 points: rotated,

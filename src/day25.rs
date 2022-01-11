@@ -1,4 +1,3 @@
-use core::num;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
@@ -133,7 +132,7 @@ impl Map {
         (next, moved)
     }
 
-    fn display(&self) {
+    fn _display(&self) {
         for y in 0..self.height {
             for x in 0..self.width {
                 match self.get_at(x, y) {

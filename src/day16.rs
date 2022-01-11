@@ -1,4 +1,4 @@
-use std::{fs, path::Iter, str::Chars};
+use std::{fs, str::Chars};
 
 enum Packet {
     Literal(u8, u8, u64),
@@ -23,7 +23,7 @@ fn run_part_01() {
 
     let mut head = ParseNode { packet_type: Packet::None, children: Vec::new() };
 
-    parse(&mut head, &mut parse_stream, 0);
+    parse(&mut head, &mut parse_stream);
 
     let version_sum = add_versions(&head);
 
@@ -33,9 +33,7 @@ fn run_part_01() {
     println!("The expression evaluates to {}", outer);
 }
 
-fn parse(parent: &mut ParseNode, stream: &mut Chars, indent:i32) -> u32 {
-    let ind_str = (0..indent).map(|_| "    ").collect::<String>();
-
+fn parse(parent: &mut ParseNode, stream: &mut Chars) -> u32 {
     let mut bits = 0;
     
     let ver = u8::from_str_radix(stream.take(3).collect::<String>().as_str(), 2).expect("Failed to parse version");
@@ -48,7 +46,6 @@ fn parse(parent: &mut ParseNode, stream: &mut Chars, indent:i32) -> u32 {
             let (parsed_bits, literal) = parse_literal(stream);
             bits += parsed_bits;
             parent.children.push(ParseNode { packet_type: Packet::Literal(ver, id, literal), children: Vec::new() });
-            println!("{}Parsed literal ver: {} id: {} num: {}", ind_str, ver, id, literal);
         },
         _ => {
             let len_id = stream.next().unwrap().to_digit(2).unwrap() as u8;
@@ -68,19 +65,18 @@ fn parse(parent: &mut ParseNode, stream: &mut Chars, indent:i32) -> u32 {
             };
 
             parent.children.push(ParseNode { packet_type: Packet::Operator(ver, id, len_id, len), children: Vec::new()});
-            println!("{}Parsed op ver: {} id: {} type: {} len: {}", ind_str, ver, id, len_id, len);
             match len_id {
                 0 => {
                     let mut bits_parsed = 0;
                     while bits_parsed < len {
-                        bits_parsed += parse(parent.children.last_mut().unwrap(), stream, indent + 1);
+                        bits_parsed += parse(parent.children.last_mut().unwrap(), stream);
                     }
 
                     bits += bits_parsed;
                 },
                 1 => {
                     for _ in 0..len {
-                        bits += parse(parent.children.last_mut().unwrap(), stream, indent + 1);
+                        bits += parse(parent.children.last_mut().unwrap(), stream);
                     }
                 },
                 _ => ()
@@ -119,8 +115,8 @@ fn parse_literal(stream: &mut Chars) -> (u32, u64) {
 
 fn add_versions(node: &ParseNode) -> u32 {
     let mut self_ver = match node.packet_type {
-        Packet::Literal(ver, id, num) => ver,
-        Packet::Operator(ver, id, len_id, len) => ver,
+        Packet::Literal(ver, _, _) => ver,
+        Packet::Operator(ver, _, _, _) => ver,
         Packet::None => 0
     } as u32;
 
@@ -133,8 +129,8 @@ fn add_versions(node: &ParseNode) -> u32 {
 
 fn evaluate(node: &ParseNode) -> u64 {
     match node.packet_type {
-        Packet::Literal(ver, id, num) => num,
-        Packet::Operator(ver, id, len_id, len) => {
+        Packet::Literal(_, _, num) => num,
+        Packet::Operator(_, id, _, _) => {
             match id {
                 0 => {
                     node.children.iter().fold(0, |acc, x| acc + evaluate(x))

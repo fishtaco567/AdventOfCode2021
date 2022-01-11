@@ -2,6 +2,8 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 pub fn run() {
+
+    println!("--Part 1");
     {
         let file = File::open("input/day02.txt").expect("Failed to open file");
         let reader = BufReader::new(file);
@@ -15,6 +17,7 @@ pub fn run() {
         println!("The product of the two is {}", product);
     }
 
+    println!("--Part 2");
     {
         let file = File::open("input/day02.txt").expect("Failed to open file");
         let reader = BufReader::new(file);

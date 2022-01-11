@@ -1,10 +1,11 @@
 use std::fs::File;
-use std::hash::Hash;
 use std::io::{BufReader, BufRead};
 use std::collections::HashMap;
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 
@@ -81,7 +82,7 @@ fn run_part_02() {
 
     let mut lines = reader.lines();
 
-    let mut source = lines.next().expect("Failed to parse first line").expect("Failed to parse first line");
+    let source = lines.next().expect("Failed to parse first line").expect("Failed to parse first line");
     lines.next(); //Skip empty line
 
     let mut pair_ins_map:HashMap<String, String> = HashMap::new();

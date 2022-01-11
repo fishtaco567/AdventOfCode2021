@@ -1,5 +1,4 @@
 use std::fs::File;
-use std::hash::Hash;
 use std::io::{BufReader, BufRead};
 use std::collections::{BinaryHeap, HashMap, HashSet};
 
@@ -113,7 +112,7 @@ impl<'a> CostView<'a> {
         (self.real_size.0 * self.repeat.0) * (self.real_size.1 * self.repeat.1)
     }
 
-    fn display(&self) {
+    fn _display(&self) {
         let s = self.get_max_size();
 
         for y in 0..s.1 {
@@ -124,7 +123,7 @@ impl<'a> CostView<'a> {
         }
     }
 
-    fn display_with(&self, path:&Vec<(i32, i32)>) {
+    fn _display_with(&self, path:&Vec<(i32, i32)>) {
         let mut set:HashSet<(i32, i32)> = HashSet::new();
         for point in path {
             set.insert(point.to_owned());
@@ -146,7 +145,9 @@ impl<'a> CostView<'a> {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 

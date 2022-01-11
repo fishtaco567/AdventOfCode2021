@@ -54,7 +54,9 @@ impl Digit {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 
@@ -101,7 +103,7 @@ fn run_part_02() {
         let first_part = split[0].split_whitespace().collect::<Vec<&str>>();
         let second_part = split[1].split_whitespace().collect::<Vec<&str>>();
         for digit_str in first_part.iter() {
-            let mut new_digit = Digit::new(digit_str.clone());
+            let new_digit = Digit::new(digit_str.clone());
             match new_digit.num {
                 None => {
                     match new_digit.get_number_of_chars() {

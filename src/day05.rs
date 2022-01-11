@@ -90,7 +90,7 @@ impl VentMap {
         self.vents.values().fold(0, |acc, num| if num >= &x { acc + 1 } else { acc })
     }
 
-    fn display(&self, x:u32, y:u32) {
+    fn _display(&self, x:u32, y:u32) {
         for j in 0..y {
             for i in 0..x {
                 let point:Point = (i, j);
@@ -106,7 +106,9 @@ impl VentMap {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 

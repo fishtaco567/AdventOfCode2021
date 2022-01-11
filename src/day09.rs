@@ -103,7 +103,9 @@ impl VentHeightmap {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 

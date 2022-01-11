@@ -1,4 +1,4 @@
-use std::{collections::{HashMap, HashSet}, hash::Hash};
+use std::{collections::{HashMap}, hash::Hash};
 
 struct DeterministicRoller {
     state:i32,
@@ -75,7 +75,9 @@ impl GameState {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 

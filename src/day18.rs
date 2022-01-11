@@ -1,4 +1,3 @@
-use std::{fs};
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
@@ -32,7 +31,9 @@ enum ExplodeOp {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 

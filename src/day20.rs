@@ -40,10 +40,6 @@ impl Image {
         }
     }
 
-    fn set_at(&mut self, x: Coord, n:char) {
-        *self.image.entry(x).or_insert('0') = n;
-    }
-
     fn get_lookup_for(&self, x: &Coord) -> usize {
         let mut s = String::new();
         
@@ -85,7 +81,7 @@ impl Image {
         num
     }
 
-    fn display(&self) {
+    fn _display(&self) {
         for j in self.min.1..self.max.1 {
             for i in self.min.0..self.max.0 {
                 print!("{}", match self.get_at(&(i, j))
@@ -102,7 +98,9 @@ impl Image {
 }
 
 pub fn run() {
+    println!("--Part 1");
     run_part_01();
+    println!("--Part 2");
     run_part_02();
 }
 
@@ -123,7 +121,7 @@ fn run_part_01() {
     lines.next(); //skip
 
     let mut image_data:Vec<char> = Vec::new();
-    let mut min = (0, 0);
+    let min = (0, 0);
     let mut max = (0, 0);
 
     for line in lines {
@@ -172,7 +170,7 @@ fn run_part_02() {
     lines.next(); //skip
 
     let mut image_data:Vec<char> = Vec::new();
-    let mut min = (0, 0);
+    let min = (0, 0);
     let mut max = (0, 0);
 
     for line in lines {
