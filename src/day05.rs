@@ -121,7 +121,7 @@ fn run_part_01() {
     }
 
     let num_over_two = vents.get_places_in_excess_of(2);
-    println!("{}", num_over_two);
+    println!("At least two points overlap with horizontal and vertical lines {}", num_over_two);
 }
 
 fn run_part_02() {
@@ -135,7 +135,7 @@ fn run_part_02() {
     }
 
     let num_over_two = vents.get_places_in_excess_of(2);
-    println!("{}", num_over_two);
+    println!("At least two points overlap with h, v, and d lines {}", num_over_two);
 }
 
 fn get_coords(s: &str) -> Vec<u32> {
